@@ -65,11 +65,11 @@ val broadcastVar = sc.broadcast(Array(1, 2, 3))
 broadcastVar.value
 ```
 
+## Sample Data Download Links
 * [Stack Exchange] - Stackoverflow data download.
 * [Sample Text File] - Sample Large Text file download.
 * [Sentiment Analysis Dataset] - Sample Tweets for training the Naive Bayes model.
 
-## Sample Data Download Links
 
 [Stack Exchange]:https://archive.org/details/stackexchange
 [Sample Text File]:http://www.gutenberg.org/ebooks/4300
