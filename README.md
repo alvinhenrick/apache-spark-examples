@@ -11,7 +11,7 @@ spark-submit \
 --driver-memory "3g" \
 target/scala-2.10/dfw-spark-meetup_2.10-0.0.1.jar \
 /Users/shona/IdeaProjects/apache-spark-examples/data/pg4300.txt \
-/Users/shona/IdeaProjects/apache-spark-examples/data/wordcount \
+/Users/shona/IdeaProjects/apache-spark-examples/data/wordcount
 ```
 ## Top 5 User Count Stackoverflow -- No Dependencies -- Assembly not required.
 ```sh
@@ -20,7 +20,7 @@ spark-submit \
 --master "local[1]" \
 --driver-memory "3g" \
 target/scala-2.10/dfw-spark-meetup_2.10-0.0.1.jar \
-/Users/shona/IdeaProjects/mini-complete-example/data/Users.xml
+/Users/shona/IdeaProjects/apache-spark-examples/data/Users.xml
 ```
 
 ## Naive Bayes Tweet Sentimental Analysis -- Lucene Text Analyzer -- Assembly required.
@@ -35,7 +35,7 @@ target/scala-2.10/dfw-spark-meetup-assembly-0.0.1.jar
 ```sh
 spark-submit \
 --class org.apache.spark.examples.streaming.TwitterPopularTags \
---master "local[1]"  \
+--master "local[2]"  \
 --driver-memory "3g" \
 lib/spark-examples-1.3.1-hadoop2.6.0.jar \
 ```
