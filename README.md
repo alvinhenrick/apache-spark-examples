@@ -1,10 +1,10 @@
 # Apache Spark Examples
 
 ## Prerequisite
-JAVA Version 7
-SBT Version 0.13.8
-SCALA Version 2.10.5
-SPARK Version 1.3.1
+JAVA Version 7  
+SBT Version 0.13.8  
+SCALA Version 2.10.5  
+SPARK Version 1.3.1  
 
 ## Basic Map Function
 
