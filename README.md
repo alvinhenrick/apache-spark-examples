@@ -1,5 +1,11 @@
 # Apache Spark Examples
 
+## Prerequisite
+JAVA Version 7
+SBT Version 0.13.8
+SCALA Version 2.10.5
+SPARK Version 1.3.1
+
 ## Basic Map Function
 
 ## Basic Average with Aggregate Function
@@ -32,12 +38,14 @@ target/scala-2.10/dfw-spark-meetup-assembly-0.0.1.jar
 ```
 
 ## Twitter Streaming -- Apache Spark Example -- Printing on Console
+### Run from Spark Home Directory.
 ```sh
 spark-submit \
 --class org.apache.spark.examples.streaming.TwitterPopularTags \
 --master "local[2]"  \
 --driver-memory "3g" \
 lib/spark-examples-1.3.1-hadoop2.6.0.jar \
+Consumer Key , Consumer Secret , Access Token ,Access Token Secret
 ```
 
 ## Explain and Discuss Aggregate Function
