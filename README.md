@@ -38,7 +38,7 @@ target/scala-2.10/dfw-spark-meetup-assembly-0.0.1.jar
 ```
 
 ## Twitter Streaming -- Apache Spark Example -- Printing on Console
-### Run from Spark Home Directory.
+#### Run from Spark Home Directory.
 ```sh
 spark-submit \
 --class org.apache.spark.examples.streaming.TwitterPopularTags \
