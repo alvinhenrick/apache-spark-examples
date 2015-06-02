@@ -57,10 +57,10 @@ numbers.aggregate(0)(math.max(_, _), _ + _)
 ```sh
 val file = sc.textFile("README.md")
 val containsSpark = file.filter(line => line.contains("Spark"))
-containsSpark foreach println
 val words = containsSpark.flatMap(line => line.split(" "))
 val counts = words.map(word => (word, 1)).reduceByKey { case (x, y) => x + y }
-println output
+counts.toDebugString
+counts.collect()
 ```
 ## Explain and Discuss Accumulator
 ```sh
