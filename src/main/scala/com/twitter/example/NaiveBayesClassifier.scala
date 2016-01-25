@@ -1,6 +1,6 @@
 package com.twitter.example
 
-import jline.ConsoleReader
+import jline.console.ConsoleReader
 import org.apache.spark.mllib.classification.{NaiveBayes, NaiveBayesModel}
 import org.apache.spark.mllib.linalg.Vectors
 import org.apache.spark.mllib.regression.LabeledPoint
@@ -9,8 +9,8 @@ import org.apache.spark.{SparkConf, SparkContext}
 import scala.io.Source
 
 /**
- * Created by Alvin on 5/20/15.
- */
+  * Created by Alvin on 5/20/15.
+  */
 object NaiveBayesClassifier extends App {
 
   val conf = new SparkConf().setAppName("Tweet Analysis")
@@ -24,8 +24,8 @@ object NaiveBayesClassifier extends App {
   console(naiveBayesAndDictionaries)
 
   /**
-   * REPL loop to enter different tweets
-   */
+    * REPL loop to enter different tweets
+    */
   def console(naiveBayesAndDictionaries: NaiveBayesAndDictionaries) = {
     println("Enter 'q' to quit")
     val consoleReader = new ConsoleReader()
@@ -90,15 +90,17 @@ object NaiveBayesClassifier extends App {
     }).collect().toMap
 
     val tfidfs = termDocsRdd flatMap {
-      termDoc =>
+      termDoc => {
         val termPairs = termDict.tfIdfs(termDoc.terms, idfs)
         // we consider here that a document only belongs to the first label
         termDoc.labels.headOption.map {
-          label =>
+          label => {
             val labelId = labelDict.indexOf(label).toDouble
             val vector = Vectors.sparse(termDict.count, termPairs)
             LabeledPoint(labelId, vector)
+          }
         }
+      }
     }
 
     val model = NaiveBayes.train(tfidfs)

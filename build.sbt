@@ -8,9 +8,11 @@ javacOptions ++= Seq("-source", "1.7", "-target", "1.7")
 
 // additional libraries
 libraryDependencies ++= Seq(
-  "org.apache.spark" %% "spark-core" % "1.4.0" % "provided",
-  "org.apache.spark" %% "spark-hive" % "1.4.0",
-  "org.apache.spark" %% "spark-mllib" % "1.4.0",
+  "org.apache.spark" %% "spark-core" % "1.5.0" % "provided",
+  "org.apache.spark" %% "spark-hive" % "1.5.0",
+  "org.apache.spark" %% "spark-mllib" % "1.5.0",
+  "com.databricks" %% "spark-csv" % "1.1.0",
+
   // Lucene
   "org.apache.lucene" % "lucene-core" % "5.1.0",
   // for Porter Stemmer
