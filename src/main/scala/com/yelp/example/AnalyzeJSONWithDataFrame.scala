@@ -1,8 +1,8 @@
 package com.yelp.example
 
-import org.apache.spark.SparkContext
 import org.apache.spark.sql.SQLContext
 import org.apache.spark.sql.hive._
+import org.apache.spark.{SparkConf, SparkContext}
 
 /**
   * Created by Alvin on 7/4/15.
@@ -14,7 +14,8 @@ object AnalyzeJSONWithDataFrame {
       case x: Int if x > 0 => args(0)
       case _ => "local[*]"
     }
-    val sc = new SparkContext(master, "AnalyzeJSONWithDataFrame")
+    val conf = new SparkConf().setMaster(master).setAppName("AnalyzeJSONWithDataFrame")
+    val sc = new SparkContext(conf)
 
     val sqlContext = new SQLContext(sc)
 

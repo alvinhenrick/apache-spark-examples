@@ -2,7 +2,7 @@ package com.zip.example
 
 import com.cotdp.hadoop.ZipFileInputFormat
 import org.apache.hadoop.conf.Configuration
-import org.apache.hadoop.fs.{FileSystem, Path}
+import org.apache.hadoop.fs.{FileStatus, FileSystem, Path}
 import org.apache.hadoop.io.{BytesWritable, Text}
 import org.apache.spark.{SparkConf, SparkContext}
 
@@ -16,7 +16,7 @@ object ProcessFile extends Serializable {
     val hadoopConf = new Configuration()
     val fs = FileSystem.get(hadoopConf)
     if (records.getLength > 0) {
-      val outFileStream = fs.create(new Path("/Users/shona/IdeaProjects/apache-spark-examples/data/" + fileName), true)
+      val outFileStream = fs.create(new Path("/Users/shona/IdeaProjects/apache-spark-examples/data/temp/" + fileName), true)
       outFileStream.write(records.getBytes)
       outFileStream.close()
     }
@@ -31,6 +31,7 @@ object Unzip {
       case _ => "local[*]"
     }
     val hadoopConf = new Configuration()
+    val fs = FileSystem.get(hadoopConf)
 
     val sparkConf = new SparkConf()
     sparkConf.setMaster(master)
@@ -39,17 +40,47 @@ object Unzip {
 
     val sc = new SparkContext(sparkConf)
 
-    val zipFileRDD = sc.newAPIHadoopFile(
-      "/Users/shona/IdeaProjects/apache-spark-examples/data/test",
-      classOf[ZipFileInputFormat],
-      classOf[Text],
-      classOf[BytesWritable], hadoopConf)
+    val fileSystem = listLeafStatuses(fs, new Path("/Users/shona/IdeaProjects/apache-spark-examples/data/test"))
 
-    zipFileRDD.foreach { x =>
-      ProcessFile(x._1.toString, x._2)
+    val allzip = fileSystem.filter(_.getPath.getName.endsWith("zip"))
+
+    allzip.foreach { x =>
+      val zipFileRDD = sc.newAPIHadoopFile(
+        x.getPath.toString,
+        classOf[ZipFileInputFormat],
+        classOf[Text],
+        classOf[BytesWritable], hadoopConf)
+
+      zipFileRDD.foreach { y =>
+        ProcessFile(y._1.toString, y._2)
+      }
     }
 
   }
+
+  /**
+    * Get [[org.apache.hadoop.fs.FileStatus]] objects for all leaf children (files) under the given base path. If the
+    * given path points to a file, return a single-element collection containing [[org.apache.hadoop.fs.FileStatus]] of
+    * that file.
+    */
+  def listLeafStatuses(fs: FileSystem, basePath: Path): Seq[FileStatus] = {
+    listLeafStatuses(fs, fs.getFileStatus(basePath))
+  }
+
+  /**
+    * Get [[FileStatus]] objects for all leaf children (files) under the given base path. If the
+    * given path points to a file, return a single-element collection containing [[FileStatus]] of
+    * that file.
+    */
+  def listLeafStatuses(fs: FileSystem, baseStatus: FileStatus): Seq[FileStatus] = {
+    def recurse(status: FileStatus): Seq[FileStatus] = {
+      val (directories, leaves) = fs.listStatus(status.getPath).partition(_.isDirectory)
+      leaves ++ directories.flatMap(f => listLeafStatuses(fs, f))
+    }
+
+    if (baseStatus.isDirectory) recurse(baseStatus) else Seq(baseStatus)
+  }
+
 }
 
 

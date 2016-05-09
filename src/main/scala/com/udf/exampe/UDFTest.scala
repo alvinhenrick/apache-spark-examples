@@ -20,7 +20,6 @@ object UDFTest {
     import sqlContext.implicits._
 
     val udfContext = new UDFContext()
-    import udfContext._
 
     //sqlContext.udf.register("func2", func2)
 
@@ -32,7 +31,7 @@ object UDFTest {
 
     df.select(func2($"age") as "added1").show
 
-    df.select(callUDF("func3", $"age") as "added1").show
+    df.select(callUDF("func3", $"age", $"age", $"age") as "added1").show
 
     sc.stop()
   }

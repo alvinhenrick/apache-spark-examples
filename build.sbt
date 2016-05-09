@@ -8,15 +8,21 @@ javacOptions ++= Seq("-source", "1.7", "-target", "1.7")
 
 // additional libraries
 libraryDependencies ++= Seq(
-  "org.apache.spark" %% "spark-core" % "1.5.0" % "provided",
-  "org.apache.spark" %% "spark-hive" % "1.5.0",
-  "org.apache.spark" %% "spark-mllib" % "1.5.0",
-  "com.databricks" %% "spark-csv" % "1.1.0",
+  "org.apache.spark" %% "spark-core" % "1.6.0" % "provided",
+  "org.apache.spark" %% "spark-hive" % "1.6.0",
+  "org.apache.spark" %% "spark-mllib" % "1.6.0",
+  "com.databricks" %% "spark-csv" % "1.3.0",
+  "org.json4s" %% "json4s-native" % "3.2.10",
+
+  "pircbot" % "pircbot" % "1.5.0",
 
   // Lucene
   "org.apache.lucene" % "lucene-core" % "5.1.0",
   // for Porter Stemmer
   "org.apache.lucene" % "lucene-analyzers-common" % "5.1.0"
+
+  //"org.apache.hadoop" % "hadoop-common" % "2.6.0" % "provided"
+
 )
 ivyScala := ivyScala.value map {
   _.copy(overrideScalaVersion = true)
