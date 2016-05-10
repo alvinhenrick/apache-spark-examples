@@ -1,9 +1,12 @@
 package com.wiki.consume.example
 
+import com.wiki.produce.example.WikiEdit
+import com.wiki.produce.example.WikiJsonProtocol._
 import kafka.serializer.StringDecoder
 import org.apache.spark._
 import org.apache.spark.streaming._
 import org.apache.spark.streaming.kafka._
+import spray.json._
 
 /**
   * Created by shona on 5/9/16.
@@ -17,12 +20,27 @@ class ConsumeWiki {
     val ssc = new StreamingContext(sc, Seconds(10)) // this sets the micro batch size
 
     /** Enable checkpoinging **/
-    ssc.checkpoint(".")
+    ssc.checkpoint("/tmp/wiki/consume/spark-checkpoint")
 
     /** Kafka initialisation **/
     val topicsSet = Set("wikitopic")
     val kafkaParams = Map[String, String]("metadata.broker.list" -> "kafka1.hadoop:9092")
-    val messages = KafkaUtils.createDirectStream[String, String, StringDecoder, StringDecoder](ssc, kafkaParams, topicsSet)
+
+    val strMessages = KafkaUtils.createDirectStream[String, String, StringDecoder, StringDecoder](ssc, kafkaParams, topicsSet)
+
+    val messages = strMessages.mapPartitions(records => records.map(x => x._2.parseJson.convertTo[WikiEdit]))
+
+    messages.map(_.channel).countByValueAndWindow(Minutes(60), Seconds(10)).foreachRDD { rdd =>
+      val data = rdd.collect()
+        .sorted(Ordering.by[(String, Long), Long](_._2).reverse)
+        .map { case (channel, count) => Map("channel" -> channel, "count" -> count) }
+        .toList
+      println("******************************************")
+      println("\n\n\n\n")
+      println(data.toJson)
+      println("\n\n\n\n")
+      println("******************************************")
+    }
   }
 
 
