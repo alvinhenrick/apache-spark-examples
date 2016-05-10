@@ -37,7 +37,7 @@ class ConsumeWiki {
         .toList
       println("******************************************")
       println("\n\n\n\n")
-      println(data.toJson)
+      println(data.take(10).toJson)
       println("\n\n\n\n")
       println("******************************************")
     }

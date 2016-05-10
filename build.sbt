@@ -17,7 +17,8 @@ libraryDependencies ++= Seq(
   "org.apache.spark" %% "spark-streaming" % sparkVersion % "provided",
   "org.apache.spark" %% "spark-streaming-kafka" % sparkVersion,
 
-  "com.databricks" %% "spark-csv" % "1.3.0",
+  "com.databricks" %% "spark-csv" % "1.4.0",
+
   "pircbot" % "pircbot" % "1.5.0",
 
   "org.apache.kafka" %% "kafka" % "0.9.0.1",
