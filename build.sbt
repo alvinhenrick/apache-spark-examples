@@ -6,15 +6,25 @@ scalaVersion := "2.10.5"
 
 javacOptions ++= Seq("-source", "1.7", "-target", "1.7")
 
+val sparkVersion = "1.6.1"
+
 // additional libraries
 libraryDependencies ++= Seq(
-  "org.apache.spark" %% "spark-core" % "1.6.0" % "provided",
-  "org.apache.spark" %% "spark-hive" % "1.6.0",
-  "org.apache.spark" %% "spark-mllib" % "1.6.0",
-  "com.databricks" %% "spark-csv" % "1.3.0",
-  "org.json4s" %% "json4s-native" % "3.2.10",
 
+  "org.apache.spark" %% "spark-core" % sparkVersion % "provided",
+  "org.apache.spark" %% "spark-hive" % sparkVersion % "provided",
+  "org.apache.spark" %% "spark-mllib" % sparkVersion % "provided",
+  "org.apache.spark" %% "spark-streaming" % sparkVersion % "provided",
+  "org.apache.spark" %% "spark-streaming-kafka" % sparkVersion,
+
+  "com.databricks" %% "spark-csv" % "1.3.0",
   "pircbot" % "pircbot" % "1.5.0",
+
+  "org.apache.kafka" %% "kafka" % "0.9.0.1",
+
+  "org.apache.kafka" % "kafka-clients" % "0.9.0.1",
+
+  "io.spray" %% "spray-json" % "1.3.2",
 
   // Lucene
   "org.apache.lucene" % "lucene-core" % "5.1.0",

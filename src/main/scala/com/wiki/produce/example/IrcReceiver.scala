@@ -1,4 +1,4 @@
-package com.wiki.example
+package com.wiki.produce.example
 
 /**
   * Created by shona on 5/3/16.
