@@ -8,7 +8,6 @@ package com.wiki.produce.example
 import org.apache.spark.Logging
 import org.apache.spark.streaming.receiver.Receiver
 import org.jibble.pircbot.PircBot
-import java.util.Date
 
 import scala.util.Random
 
@@ -44,7 +43,7 @@ private class IrcBot(
   private def processMessage(line: String, channel: String, timestamp: Long): Option[WikiEdit] = try {
     val input = line.replaceAll("[^\\x20-\\x7E]", "")
     input match {
-      case Regex(title, flags, diffUrl, user, byteDiff, summary) => Some(WikiEdit(channel, new Date(timestamp),
+      case Regex(title, flags, diffUrl, user, byteDiff, summary) => Some(WikiEdit(channel, timestamp,
         title, flags, diffUrl, user, byteDiff, summary))
       case _ => None
     }
