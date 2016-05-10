@@ -6,17 +6,17 @@ import java.sql.Timestamp
   * Created by shona on 5/9/16.
   */
 
-private object EditType extends Enumeration {
+object EditType extends Enumeration {
   type EditType = Value
   val SPECIAL, TALK, EDIT = Value
 }
 
-private case class WikiEdit(channel: String, timestamp: Timestamp, title: String, flags: String,
-                            page: String, username: String, diff: String, comment: String,
-                            isNew: Boolean, isMinor: Boolean, isUnpatrolled: Boolean, isBotEdit: Boolean,
-                            editType: EditType.EditType)
+case class WikiEdit(channel: String, timestamp: Timestamp, title: String, flags: String,
+                    page: String, username: String, diff: String, comment: String,
+                    isNew: Boolean, isMinor: Boolean, isUnpatrolled: Boolean, isBotEdit: Boolean,
+                    editType: EditType.EditType)
 
-private object WikiEdit {
+object WikiEdit {
 
   def apply(channel: String, timestamp: Timestamp, title: String, flags: String, page: String,
             username: String, diff: String, comment: String): WikiEdit =
