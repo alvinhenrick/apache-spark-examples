@@ -31,13 +31,15 @@ class ConsumeWiki {
     val messages = strMessages.mapPartitions(records => records.map(x => x._2.parseJson.convertTo[WikiEdit]))
 
     messages.map(_.channel).countByValueAndWindow(Minutes(60), Seconds(10)).foreachRDD { rdd =>
+
       val data = rdd.collect()
         .sorted(Ordering.by[(String, Long), Long](_._2).reverse)
-        .map { case (channel, count) => Map("channel" -> channel, "count" -> count) }
+        .map { case (channel, count) => ("channel" -> channel, "count" -> count + "") }
         .toList
+
       println("******************************************")
       println("\n\n\n\n")
-      println(data.take(10).toJson)
+      println(data.take(3).toJson)
       println("\n\n\n\n")
       println("******************************************")
     }
