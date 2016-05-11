@@ -11,7 +11,7 @@ import spray.json._
 /**
   * Created by shona on 5/9/16.
   */
-class ConsumeWiki {
+class WikiConsumeStream {
 
 
   def main(args: Array[String]) {

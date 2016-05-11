@@ -11,7 +11,7 @@ import spray.json._
 /**
   * Created by shona on 5/2/16.
   */
-object WikiSteam {
+object WikiProduceStream {
 
   private def processStream(ssc: StreamingContext, server: String, channels: List[String]): Unit = {
     val stream = ssc.receiverStream(new IrcReceiver(server, channels, StorageLevel.MEMORY_ONLY)).cache()
