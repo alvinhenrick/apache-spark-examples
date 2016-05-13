@@ -11,8 +11,7 @@ import spray.json._
 /**
   * Created by shona on 5/9/16.
   */
-class WikiConsumeStream {
-
+object WikiConsumeStream {
 
   def main(args: Array[String]) {
     /** Spark initialization **/
@@ -43,6 +42,9 @@ class WikiConsumeStream {
       println("\n\n\n\n")
       println("******************************************")
     }
+
+    ssc.start() // Start the computation
+    ssc.awaitTermination() // Wait for the computation to terminate
   }
 
 }
