@@ -35,7 +35,7 @@ object WikiProduceStream {
 
   def main(args: Array[String]) = {
     val conf = new SparkConf()
-      .setAppName("IRC Wikipedia Page Edit Stream").setMaster("local[*]")
+      .setAppName("IRC Wikipedia Page Edit Stream")
     val sparkContext = new SparkContext(conf)
     val ssc = new StreamingContext(sparkContext, Seconds(10))
     ssc.checkpoint("/tmp/wiki/produce/spark-checkpoint")
